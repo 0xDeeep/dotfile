@@ -32,9 +32,11 @@ Set up a modern, productive terminal environment on a new MacBook and track all 
 - clang 17.0.0
 
 ### 3. Homebrew ✅
-- NOT installed. Do NOT assume it is available.
-- Install tools via manual binary downloads or `curl` scripts
-- If Homebrew is needed in future: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+- **Version:** 5.0.15
+- **Path:** `/opt/homebrew` (Apple Silicon)
+- Initialized in zshrc via `eval "$(/opt/homebrew/bin/brew shellenv)"`
+- Use brew for tools that don't have prebuilt binaries (e.g. btop)
+- Prefer `~/bin` manual installs for single-binary tools where a direct download exists
 
 ### 4. Zellij ✅
 - **Version:** 0.43.1

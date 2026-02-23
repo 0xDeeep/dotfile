@@ -27,6 +27,13 @@ link() {
 
 info "Setting up dotfiles..."
 
+# ── Homebrew ──────────────────────────────────────────────────────
+if [ ! -f "/opt/homebrew/bin/brew" ]; then
+  info "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # ── Symlinks ──────────────────────────────────────────────────────
 link zshrc                      "$HOME/.zshrc"
 link gitconfig                  "$HOME/.gitconfig"
@@ -80,5 +87,8 @@ if [ ! -d "$HOME/.zsh/zsh-syntax-highlighting" ]; then
   info "Installing zsh-syntax-highlighting..."
   git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/.zsh/zsh-syntax-highlighting"
 fi
+
+# ── brew tools ────────────────────────────────────────────────────
+brew install btop
 
 info "Done! Open a new terminal or run: source ~/.zshrc"

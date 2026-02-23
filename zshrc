@@ -1,5 +1,8 @@
 export PATH="$HOME/.local/bin:$HOME/bin:$HOME/.fzf/bin:$PATH"
 
+# ── Homebrew ───────────────────────────────────────────────────────
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # ── Zsh completion ────────────────────────────────────────────────
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
