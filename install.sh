@@ -33,10 +33,11 @@ link gitconfig                  "$HOME/.gitconfig"
 link alacritty/alacritty.toml   "$HOME/.config/alacritty/alacritty.toml"
 link zellij/config.kdl          "$HOME/.config/zellij/config.kdl"
 
-# ── Zellij binary ─────────────────────────────────────────────────
-if ! command -v zellij &>/dev/null && [ ! -f "$HOME/bin/zellij" ]; then
+mkdir -p "$HOME/bin"
+
+# ── Zellij ────────────────────────────────────────────────────────
+if [ ! -f "$HOME/bin/zellij" ]; then
   info "Installing Zellij..."
-  mkdir -p "$HOME/bin"
   ZELLIJ_VERSION="v0.43.1"
   curl -L "https://github.com/zellij-org/zellij/releases/download/${ZELLIJ_VERSION}/zellij-aarch64-apple-darwin.tar.gz" \
     | tar -xz -C /tmp
@@ -44,14 +45,40 @@ if ! command -v zellij &>/dev/null && [ ! -f "$HOME/bin/zellij" ]; then
   chmod +x "$HOME/bin/zellij"
 fi
 
-# ── glow binary ───────────────────────────────────────────────────
-if ! command -v glow &>/dev/null && [ ! -f "$HOME/bin/glow" ]; then
+# ── glow ──────────────────────────────────────────────────────────
+if [ ! -f "$HOME/bin/glow" ]; then
   info "Installing glow..."
-  mkdir -p "$HOME/bin"
   curl -L "https://github.com/charmbracelet/glow/releases/download/v2.1.1/glow_2.1.1_Darwin_arm64.tar.gz" \
     | tar -xz -C /tmp "glow_2.1.1_Darwin_arm64/glow"
   mv /tmp/glow_2.1.1_Darwin_arm64/glow "$HOME/bin/glow"
   chmod +x "$HOME/bin/glow"
+fi
+
+# ── starship ──────────────────────────────────────────────────────
+if [ ! -f "$HOME/bin/starship" ]; then
+  info "Installing starship..."
+  curl -L "https://github.com/starship/starship/releases/download/v1.24.2/starship-aarch64-apple-darwin.tar.gz" \
+    | tar -xz -C /tmp
+  mv /tmp/starship "$HOME/bin/starship"
+  chmod +x "$HOME/bin/starship"
+fi
+
+# ── fzf ───────────────────────────────────────────────────────────
+if [ ! -d "$HOME/.fzf" ]; then
+  info "Installing fzf..."
+  git clone --depth 1 --branch v0.68.0 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+  "$HOME/.fzf/install" --bin --no-bash --no-fish --no-zsh --no-update-rc
+fi
+
+# ── zsh plugins ───────────────────────────────────────────────────
+if [ ! -d "$HOME/.zsh/zsh-autosuggestions" ]; then
+  info "Installing zsh-autosuggestions..."
+  git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions "$HOME/.zsh/zsh-autosuggestions"
+fi
+
+if [ ! -d "$HOME/.zsh/zsh-syntax-highlighting" ]; then
+  info "Installing zsh-syntax-highlighting..."
+  git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/.zsh/zsh-syntax-highlighting"
 fi
 
 info "Done! Open a new terminal or run: source ~/.zshrc"
