@@ -38,7 +38,7 @@ alias zquit='zellij kill-session $ZELLIJ_SESSION_NAME'
 # Push dotfiles changes to GitHub
 dsync() {
   local msg="${1:-update dotfiles}"
-  git -C ~/dotfiles add -A && git -C ~/dotfiles commit -m "$msg" && git -C ~/dotfiles push
+  git -C ~/dotfiles add -A && git -C ~/dotfiles commit -m "$msg" && git -C ~/dotfiles push -u origin main
 }
 
 # Zellij smart attach — directory-based sessions
