@@ -88,6 +88,31 @@ if [ ! -d "$HOME/.zsh/zsh-syntax-highlighting" ]; then
   git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/.zsh/zsh-syntax-highlighting"
 fi
 
+# ── bat ───────────────────────────────────────────────────────────
+if [ ! -f "$HOME/bin/bat" ]; then
+  info "Installing bat..."
+  curl -L "https://github.com/sharkdp/bat/releases/download/v0.26.1/bat-v0.26.1-aarch64-apple-darwin.tar.gz" \
+    | tar -xz -C /tmp
+  mv /tmp/bat-v0.26.1-aarch64-apple-darwin/bat "$HOME/bin/bat"
+  chmod +x "$HOME/bin/bat"
+fi
+
+# ── ripgrep ───────────────────────────────────────────────────────
+if [ ! -f "$HOME/bin/rg" ]; then
+  info "Installing ripgrep..."
+  curl -L "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-aarch64-apple-darwin.tar.gz" \
+    | tar -xz -C /tmp
+  mv /tmp/ripgrep-15.1.0-aarch64-apple-darwin/rg "$HOME/bin/rg"
+  chmod +x "$HOME/bin/rg"
+fi
+
+# ── jq ────────────────────────────────────────────────────────────
+if [ ! -f "$HOME/bin/jq" ]; then
+  info "Installing jq..."
+  curl -L "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-macos-arm64" -o "$HOME/bin/jq"
+  chmod +x "$HOME/bin/jq"
+fi
+
 # ── brew tools ────────────────────────────────────────────────────
 brew install btop
 

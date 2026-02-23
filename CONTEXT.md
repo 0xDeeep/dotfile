@@ -145,7 +145,13 @@ dsync "add someapp config"
 ~/bin/                      ← user binaries (in PATH)
 ├── zellij                  ← v0.43.1
 ├── glow                    ← v2.1.1
-└── starship                ← v1.24.2
+├── starship                ← v1.24.2
+├── bat                     ← v0.26.1
+├── rg                      ← ripgrep v15.1.0
+└── jq                      ← v1.8.1
+
+/opt/homebrew/              ← Homebrew v5.0.15
+└── btop                    ← v1.4.6
 
 ~/.zsh/
 ├── zsh-autosuggestions/
