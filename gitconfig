@@ -1,0 +1,10 @@
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
+[user]
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKzdsuf4njngV97No0weykFKTMh8W93cR4nbyfBpMfwo
+	name = 0xDeeep
+	email = 65382963+0xDeeep@users.noreply.github.com
