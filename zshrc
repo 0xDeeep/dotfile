@@ -68,3 +68,47 @@ eval "$(starship init zsh)"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# --
+tunnel_asgard() {
+    ssh -L 6379:localhost:6379 \
+        -L 5432:localhost:5432 \
+        asgardhq
+}
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# opencode
+export PATH=/Users/deep/.opencode/bin:$PATH
+
+# claude-mem alias disabled 2026-05-03: plugin was uninstalled but its daemon kept rewriting AGENTS.md
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+
+# Exness / MT5 live BTC quote helpers
+export EXNESS_TICKS_CSV="$HOME/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/MQL5/Files/exness_ticks.csv"
+
+exwatch() {
+  local interval="${1:-1}"
+  local key=""
+  while true; do
+    clear
+    date
+    stat -f "file modified: %Sm" "$EXNESS_TICKS_CSV" 2>/dev/null || true
+    cat "$EXNESS_TICKS_CSV" 2>/dev/null || echo "missing: $EXNESS_TICKS_CSV"
+    echo
+    echo "press q to stop; refresh ${interval}s"
+    key=""
+    read -t "$interval" -k 1 key
+    [[ "$key" == "q" ]] && break
+  done
+}
+
+exbench() {
+  cargo run --manifest-path "$HOME/Dev/asgard/stride-perp-agg-rs/Cargo.toml" -p stride-market-bench -- \
+    --reference exness \
+    --exness-csv "$EXNESS_TICKS_CSV" \
+    "$@"
+}
