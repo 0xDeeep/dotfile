@@ -111,12 +111,3 @@ watch() {
   done
 }
 
-# Exness / MT5 live BTC quote helper
-export EXNESS_TICKS_CSV="$HOME/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/MQL5/Files/exness_ticks.csv"
-
-exbench() {
-  cargo run --manifest-path "$HOME/Dev/asgard/stride-perp-agg-rs/Cargo.toml" -p stride-market-bench -- \
-    --reference exness \
-    --exness-csv "$EXNESS_TICKS_CSV" \
-    "$@"
-}
