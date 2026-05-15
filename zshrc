@@ -87,24 +87,32 @@ export PATH=/Users/deep/.opencode/bin:$PATH
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 
-# Exness / MT5 live BTC quote helpers
-export EXNESS_TICKS_CSV="$HOME/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/MQL5/Files/exness_ticks.csv"
+# macOS fallback for Linux watch(1). Examples:
+#   watch cat file.txt
+#   watch -n 0.5 cat file.txt
+watch() {
+  local interval=2
+  if [[ "$1" == "-n" || "$1" == "--interval" ]]; then
+    interval="$2"
+    shift 2
+  fi
+  if [[ $# -eq 0 ]]; then
+    echo "usage: watch [-n seconds] command [args ...]"
+    return 2
+  fi
 
-exwatch() {
-  local interval="${1:-1}"
-  local key=""
   while true; do
     clear
     date
-    stat -f "file modified: %Sm" "$EXNESS_TICKS_CSV" 2>/dev/null || true
-    cat "$EXNESS_TICKS_CSV" 2>/dev/null || echo "missing: $EXNESS_TICKS_CSV"
+    echo "Every ${interval}s: $*"
     echo
-    echo "press q to stop; refresh ${interval}s"
-    key=""
-    read -t "$interval" -k 1 key
-    [[ "$key" == "q" ]] && break
+    "$@"
+    sleep "$interval"
   done
 }
+
+# Exness / MT5 live BTC quote helper
+export EXNESS_TICKS_CSV="$HOME/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/MQL5/Files/exness_ticks.csv"
 
 exbench() {
   cargo run --manifest-path "$HOME/Dev/asgard/stride-perp-agg-rs/Cargo.toml" -p stride-market-bench -- \
